@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from atproto import Client
+from atproto.exceptions import NetworkError
 
 # Load environment variables from .env file
 load_dotenv()
@@ -17,4 +18,13 @@ client = Client()
 login = client.login(username, password)
 print(login.handle, login.display_name, login.followers_count)
 
-post = client.send_post('And another test post from Python.')
+# post = client.send_post('And another test post from Python.')
+
+try:
+    data = client.get_timeline(limit=10)
+    feed = data.feed
+    next_page = data.cursor
+    for item in feed:
+        print(item.post)
+except NetworkError as error:
+    print(f"something went wrong:{error} ")

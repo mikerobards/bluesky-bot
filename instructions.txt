@@ -17,10 +17,10 @@ print(login.handle,login.display_name,login.followers_count)
 post = client.send_post('Testing my Python script. Hey there, fellow Final Fantasy nerds!')
 
 
-#2) Feed:
+#2 Feed:
 
 try:
-    data = client.get_timeline(limit=30)
+    data = client.get_timeline(limit=10)
     feed = data.feed
     next_page = data.cursor
     for item in feed:
@@ -28,7 +28,7 @@ try:
 except NetworkError as error:
     print(f"something went wrong:{error} ")
 
-#3) Generous Bot
+#3 Generous Bot
 def limit_handler(follower_bundle):
     try:
         while True and len(follower_bundle.followers) > 0:

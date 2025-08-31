@@ -82,3 +82,25 @@ for follower in limit_handler(followers):
     print(f"follower: {follower.display_name}")
     if follower.display_name == "follower":
         client.follow(follower.did)
+
+# Like Bot
+
+search_string = 'hello'
+numberOfPosts = 5
+count = 0
+try:
+    like_bot_data = client.get_timeline(limit=100)
+    like_bot_feed = like_bot_data.feed
+
+    for item in like_bot_feed:
+        if item.post.record.text.find(search_string) > -1:
+            count += 1
+            client.like(item.post.uri, item.post.cid)
+            print(item.post.uri, item.post.cid)
+            print('I liked that tweet!')
+            if count >= numberOfPosts:
+                break
+except NetworkError as e:
+    print(f"Network error in Like Bot: {e}")
+except Exception as e:
+    print(f"Error in Like Bot: {e}")
